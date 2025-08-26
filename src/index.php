@@ -1,5 +1,10 @@
+<?php
+require_once 'Character.php';
+require_once 'Guerrier.php';
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
@@ -10,7 +15,14 @@
 </head>
 
 <body class="bg-light">
-    <?php echo 'Hello World' ?>
+
+    <?php
+
+    $warrior = new Guerrier(800, 0, 'Muramana', 100, 'PowerShield', 150);
+    var_dump($warrior);
+
+    ?>
+
 </body>
 
 </html>
