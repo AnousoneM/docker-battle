@@ -7,22 +7,22 @@ class Character
 
     // Mise en place des Getters / Setters
 
-    public function getHealth()
+    public function getHealth(): int
     {
         return $this->health;
     }
 
-    public function setHealth(int $health)
+    public function setHealth(int $health): void
     {
         $this->health = $health;
     }
 
-    public function getMana()
+    public function getMana(): int
     {
         return $this->mana;
     }
 
-    public function setMana(int $mana)
+    public function setMana(int $mana): void
     {
         $this->mana = $mana;
     }

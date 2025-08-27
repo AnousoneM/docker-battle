@@ -8,45 +8,45 @@ class Guerrier extends Character
     private int $shieldValue;
 
     // Getter / Setter :
-    public function getWeapon()
+    public function getWeapon(): string
     {
         return $this->weapon;
     }
 
-    public function setWeapon(string $weapon)
+    public function setWeapon(string $weapon): void
     {
         $this->weapon = $weapon;
     }
 
 
-    public function getWeaponDamage()
+    public function getWeaponDamage(): int
     {
         return $this->weaponDamage;
     }
 
-    public function setWeaponDamage(int $weaponDamage)
+    public function setWeaponDamage(int $weaponDamage): void
     {
         $this->weaponDamage = $weaponDamage;
     }
 
 
-    public function getShield()
+    public function getShield(): string
     {
         return $this->shield;
     }
 
-    public function setShield(string $shield)
+    public function setShield(string $shield): void
     {
         $this->shield = $shield;
     }
 
 
-    public function getShieldValue()
+    public function getShieldValue(): int
     {
         return $this->shieldValue;
     }
 
-    public function setShieldValue(int $shieldValue)
+    public function setShieldValue(int $shieldValue): void
     {
         $this->shieldValue = $shieldValue;
     }
@@ -60,12 +60,19 @@ class Guerrier extends Character
         $this->setShieldValue($shieldValue);
     }
 
-    public function attack(){
+    public function attack(): int
+    {
         return $this->getWeaponDamage();
     }
 
-    public function getDamage($damage) {
-        
+    public function getDamage($damage): void
+    {
+        // je calcule les degats réels en fonction : des damages et du bouclier
+        $realDamage = $damage - $this->getShieldValue();
+        // Je change la valeur de la vie du guerrier en appliquant les damages
+        // !! Attention !! de ne pas rajouter de la vie avec une valeur positive ;)
+        if ($realDamage > 0) {
+            $this->setHealth($this->getHealth() - $realDamage);
+        }
     }
-
 }
