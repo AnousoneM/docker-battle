@@ -6,18 +6,16 @@ require_once 'Character.php';
 require_once 'Guerrier.php';
 require_once 'Orc.php';
 
-var_dump($_POST);
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['action'])) {
 
         switch ($_POST['action']) {
             case 'create-warrior':
-                $warrior;
+                $guerrier = true;
                 break;
 
             case 'create-orc':
-                $orc;
+                $orc = true;
                 break;
 
             case 'decider':
@@ -66,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <p class="h1 font-title mx-auto display-2">Guerrier vs Orc</p>
+                <p class="h1 font-title ms-3 display-2">Guerrier vs Orc</p>
             </div>
         </div>
     </nav>
@@ -96,28 +94,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <input type="hidden" name="action" value="battle">
                     <button class="btn btn-lg btn-outline-dark w-100">COMBAT !</button>
                 </form>
+                <a href="reset.php" class="btn btn-secondary mt-3">Reset</a>
             </div>
         </div>
 
 
         <div class="col-lg-3 p-3 border">
             <!-- INTERFACE GUERRIER -->
-            <div class="row justify-content-center">
-                <div class="rounded border border-4 border-secondary shadow m-3 bg-light p-3">
-                    <div class="text-center">
-                        <p class="h2">Conan</p>
-                        <p class="h4">Classe : Guerrier</p>
-                    </div>
-                    <div class="text-center fs-4">
-                        <i class="bi bi-heart-fill text-danger"></i> : <span class="fw-bold text-danger">500</span> / <i class="bi bi-droplet-fill text-primary"></i> : <span class="fw-bold text-primary">200</span>
-                    </div>
-                    <div class="text-center">
-                        <p class="mt-2 mb-0"><i class="bi bi-pencil-fill fs-4"></i> : <b>Muramana</b> (150)</p>
-                        <p class="my-0"><i class="bi bi-shield-shaded fs-4"></i> : <b>Super Shield</b> (50)</p>
+            <?php if (!isset($guerrier)) { ?>
+                <div class="row justify-content-center">
+                    <div class="rounded border border-4 border-secondary shadow m-3 bg-light p-3">
+                        <div class="text-center">
+                            <p class="h2">Conan</p>
+                            <p class="h4">Classe : Guerrier</p>
+                        </div>
+                        <div class="text-center fs-4">
+                            <i class="bi bi-heart-fill text-danger"></i> : <span class="fw-bold text-danger">500</span> / <i class="bi bi-droplet-fill text-primary"></i> : <span class="fw-bold text-primary">200</span>
+                        </div>
+                        <div class="text-center">
+                            <p class="mt-2 mb-0"><i class="bi bi-pencil-fill fs-4"></i> : <b>Muramana</b> (150)</p>
+                            <p class="my-0"><i class="bi bi-shield-shaded fs-4"></i> : <b>Super Shield</b> (50)</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-
+            <?php } else { ?>
+                <p>Il faut créer un guerrier !</p>
+            <?php } ?>
         </div>
 
         <div class="col-lg-2 p-3 border text-center display-1">
@@ -127,21 +129,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <div class="col-lg-3 p-3 border">
             <!-- INTERFACE ORC -->
-            <div class="row justify-content-center">
-                <div class="rounded border border-4 border-secondary shadow m-3 bg-light p-3">
-                    <div class="text-center">
-                        <p class="h2">Conan</p>
-                        <p class="h4">Classe : Guerrier</p>
-                    </div>
-                    <div class="text-center fs-4">
-                        <i class="bi bi-heart-fill text-danger"></i> : <span class="fw-bold text-danger">500</span> / <i class="bi bi-droplet-fill text-primary"></i> : <span class="fw-bold text-primary">200</span>
-                    </div>
-                    <div class="text-center">
-                        <p class="mt-2 mb-0"><i class="bi bi-pencil-fill fs-4"></i> : <b>Muramana</b> (150)</p>
-                        <p class="my-0"><i class="bi bi-shield-shaded fs-4"></i> : <b>Super Shield</b> (50)</p>
+            <?php if (!isset($orc)) { ?>
+                <div class="row justify-content-center">
+                    <div class="rounded border border-4 border-secondary shadow m-3 bg-light p-3">
+                        <div class="text-center">
+                            <p class="h2">Froggy</p>
+                            <p class="h4">Classe : Orc</p>
+                        </div>
+                        <div class="text-center fs-4">
+                            <i class="bi bi-heart-fill text-danger"></i> : <span class="fw-bold text-danger">500</span> / <i class="bi bi-droplet-fill text-primary"></i> : <span class="fw-bold text-primary">200</span>
+                        </div>
+                        <div class="text-center">
+                            <p class="mt-2 mb-0"><i class="bi bi-fire fs-4"></i> : <b>Attaque</b> (150 - 200)</p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            <?php } else { ?>
+                <p>Il faut créer un orc !</p>
+            <?php } ?>
         </div>
 
     </div>
