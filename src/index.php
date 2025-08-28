@@ -4,7 +4,7 @@ require_once 'Character.php';
 require_once 'Guerrier.php';
 require_once 'Orc.php';
 
-// j'ai besoin des modèles avant l'utilisation des variables de session
+// j'ai besoin des modèles avant l'utilisation des variables de session, donc je fais appel à mes classes en premier
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exercices Fonctions</title>
+    <title>Guerrier Vs Orc</title>
 
     <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
