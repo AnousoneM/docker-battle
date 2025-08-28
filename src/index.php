@@ -4,7 +4,7 @@ require_once 'Character.php';
 require_once 'Guerrier.php';
 require_once 'Orc.php';
 
-// j'ai besoin des modèles avant l'utilisation des variables de session, donc je fais appel à mes classes en premier
+// j'ai besoin des modèles avant l'utilisation des variables de session, donc je fais appel à mes classes en premiergit a
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
