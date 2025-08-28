@@ -1,21 +1,24 @@
 <?php
 
-session_start();
-
 require_once 'Character.php';
 require_once 'Guerrier.php';
 require_once 'Orc.php';
+
+// j'ai besoin des modèles avant l'utilisation des variables de session
+session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['action'])) {
 
         switch ($_POST['action']) {
-            case 'create-warrior':
-                $guerrier = true;
+            case 'create-guerrier':
+                $_SESSION['guerrier']['carac'] = new Guerrier(100, 20, "Epee", 200, "Bouclier", 300);
+                $_SESSION['guerrier']['name'] = "Gaston";
                 break;
 
             case 'create-orc':
-                $orc = true;
+                $_SESSION['orc']['carac'] = new Orc(666, 666, 666, 666);
+                $_SESSION['orc']['name'] = "Shreky";
                 break;
 
             case 'decider':
@@ -31,6 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 }
+
+// var_dump($_SESSION);
 
 ?>
 
@@ -76,13 +81,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <!-- INTERFACE BOUTON -->
             <div class="d-grid gap-1">
                 <form action="" method="POST">
-                    <input type="hidden" name="action" value="create-warrior">
-                    <button class="btn btn-dark text-center w-100">Créer Guerrier</button>
+                    <input type="hidden" name="action" value="create-guerrier">
+                    <button class="btn btn-dark text-center w-100" <?= isset($_SESSION['guerrier']) ? 'disabled' : '' ?>>Créer Guerrier</button>
                 </form>
 
                 <form action="" method="POST">
                     <input type="hidden" name="action" value="create-orc">
-                    <button class="btn btn-dark text-center w-100">Créer Orc</button>
+                    <button class="btn btn-dark text-center w-100" <?= isset($_SESSION['orc']) ? 'disabled' : '' ?>>Créer Orc</button>
                 </form>
 
                 <form action="" method="POST">
@@ -101,24 +106,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <div class="col-lg-3 p-3 border">
             <!-- INTERFACE GUERRIER -->
-            <?php if (!isset($guerrier)) { ?>
+            <?php if (isset($_SESSION['guerrier'])) { ?>
                 <div class="row justify-content-center">
                     <div class="rounded border border-4 border-secondary shadow m-3 bg-light p-3">
                         <div class="text-center">
-                            <p class="h2">Conan</p>
+                            <p class="h2"><?= $_SESSION['guerrier']['name'] ?></p>
                             <p class="h4">Classe : Guerrier</p>
                         </div>
                         <div class="text-center fs-4">
-                            <i class="bi bi-heart-fill text-danger"></i> : <span class="fw-bold text-danger">500</span> / <i class="bi bi-droplet-fill text-primary"></i> : <span class="fw-bold text-primary">200</span>
+                            <i class="bi bi-heart-fill text-danger"></i> : <span class="fw-bold text-danger"><?= $_SESSION['guerrier']['carac']->getHealth() ?></span> / <i class="bi bi-droplet-fill text-primary"></i> : <span class="fw-bold text-primary"><?= $_SESSION['guerrier']['carac']->getMana() ?></span>
                         </div>
                         <div class="text-center">
-                            <p class="mt-2 mb-0"><i class="bi bi-pencil-fill fs-4"></i> : <b>Muramana</b> (150)</p>
-                            <p class="my-0"><i class="bi bi-shield-shaded fs-4"></i> : <b>Super Shield</b> (50)</p>
+                            <p class="mt-2 mb-0"><i class="bi bi-pencil-fill fs-4"></i> : <b><?= $_SESSION['guerrier']['carac']->getWeapon() ?></b> (<?= $_SESSION['guerrier']['carac']->getWeaponDamage() ?>)</p>
+                            <p class="my-0"><i class="bi bi-shield-shaded fs-4"></i> : <b><?= $_SESSION['guerrier']['carac']->getShield() ?></b> (<?= $_SESSION['guerrier']['carac']->getShieldValue() ?>)</p>
                         </div>
                     </div>
                 </div>
             <?php } else { ?>
-                <p>Il faut créer un guerrier !</p>
+                <p class="text-center display-5">Il faut créer un guerrier !</p>
             <?php } ?>
         </div>
 
@@ -129,23 +134,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <div class="col-lg-3 p-3 border">
             <!-- INTERFACE ORC -->
-            <?php if (!isset($orc)) { ?>
+            <?php if (isset($_SESSION['orc'])) { ?>
                 <div class="row justify-content-center">
                     <div class="rounded border border-4 border-secondary shadow m-3 bg-light p-3">
                         <div class="text-center">
-                            <p class="h2">Froggy</p>
+                            <p class="h2"><?= $_SESSION['orc']['name'] ?></p>
                             <p class="h4">Classe : Orc</p>
                         </div>
                         <div class="text-center fs-4">
-                            <i class="bi bi-heart-fill text-danger"></i> : <span class="fw-bold text-danger">500</span> / <i class="bi bi-droplet-fill text-primary"></i> : <span class="fw-bold text-primary">200</span>
+                            <i class="bi bi-heart-fill text-danger"></i> : <span class="fw-bold text-danger"><?= $_SESSION['orc']['carac']->getHealth() ?></span> / <i class="bi bi-droplet-fill text-primary"></i> : <span class="fw-bold text-primary"><?= $_SESSION['orc']['carac']->getMana() ?></span>
                         </div>
                         <div class="text-center">
-                            <p class="mt-2 mb-0"><i class="bi bi-fire fs-4"></i> : <b>Attaque</b> (150 - 200)</p>
+                            <p class="mt-2 mb-0"><i class="bi bi-fire fs-4"></i> : <b>Attaque</b> (<?= $_SESSION['orc']['carac']->getDamageMin() ?> - <?= $_SESSION['orc']['carac']->getDamageMax() ?>)</p>
                         </div>
                     </div>
                 </div>
             <?php } else { ?>
-                <p>Il faut créer un orc !</p>
+                <p class="text-center display-5">Il faut créer un orc !</p>
             <?php } ?>
         </div>
 
