@@ -1,15 +1,21 @@
 <?php
 
+// nous appelons toutes nos classes en amont à l'aide de require_once
+
 require_once 'Character.php';
 require_once 'Guerrier.php';
 require_once 'Orc.php';
 
-// j'ai besoin des modèles avant l'utilisation des variables de session, donc je fais appel à mes classes en premiergit a
+// Nous avons besoin des modèles avant l'utilisation des variables de session : le session start doit être après les "require" des classes
 session_start();
 
+// on lance notre logique uniquement lorsqu'il y a un POST via un form + button
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    // on recherche la variable action dans la superglobal $_POST
     if (isset($_POST['action'])) {
 
+        // On utilise un switch pour définir des actions en fonction des valeurs
         switch ($_POST['action']) {
             case 'create-guerrier':
                 $_SESSION['guerrier']['carac'] = new Guerrier(100, 20, "Epee", 200, "Bouclier", 300);
@@ -48,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Guerrier Vs Orc</title>
 
     <!-- bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
     <!-- fonts google -->
@@ -82,12 +88,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="d-grid gap-1">
                 <form action="" method="POST">
                     <input type="hidden" name="action" value="create-guerrier">
-                    <button class="btn btn-dark text-center w-100" <?= isset($_SESSION['guerrier']) ? 'disabled' : '' ?>>Créer Guerrier</button>
+                    <!-- en fonction de la création du bouton, le bouton changera : disabled, changement de texte ...  -->
+                    <button class="btn btn-dark text-center w-100" <?= isset($_SESSION['guerrier']) ? 'disabled' : '' ?>>
+                        <?= isset($_SESSION['guerrier']) ? 'Guerrier <i class="bi bi-check-lg"></i>' : 'Créer Guerrier' ?>
+                    </button>
                 </form>
 
                 <form action="" method="POST">
                     <input type="hidden" name="action" value="create-orc">
-                    <button class="btn btn-dark text-center w-100" <?= isset($_SESSION['orc']) ? 'disabled' : '' ?>>Créer Orc</button>
+                    <button class="btn btn-dark text-center w-100" <?= isset($_SESSION['orc']) ? 'disabled' : '' ?>>
+                        <?= isset($_SESSION['orc']) ? 'Orc <i class="bi bi-check-lg"></i>' : 'Créer Orc' ?>
+                    </button>
                 </form>
 
                 <form action="" method="POST">
@@ -104,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
 
 
-        <div class="col-lg-3 p-3 border">
+        <div class="col-lg-3 p-3 border d-flex flex-column justify-content-center">
             <!-- INTERFACE GUERRIER -->
             <?php if (isset($_SESSION['guerrier'])) { ?>
                 <div class="row justify-content-center">
@@ -123,16 +134,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                 </div>
             <?php } else { ?>
-                <p class="text-center display-5">Il faut créer un guerrier !</p>
+                <p class="text-center h1">En attente d'un guerrier !</p>
             <?php } ?>
         </div>
 
-        <div class="col-lg-2 p-3 border text-center display-1">
+        <div class="col-lg-2 p-3 border text-center display-1 d-flex flex-column justify-content-center">
             <!-- IMAGE COMBAT COMMENCE -->
             <i class="bi bi-lightning-fill text-warning"></i>
         </div>
 
-        <div class="col-lg-3 p-3 border">
+        <div class="col-lg-3 p-3 border d-flex flex-column justify-content-center">
             <!-- INTERFACE ORC -->
             <?php if (isset($_SESSION['orc'])) { ?>
                 <div class="row justify-content-center">
@@ -150,7 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                 </div>
             <?php } else { ?>
-                <p class="text-center display-5">Il faut créer un orc !</p>
+                <p class="text-center h1">En attente d'un orc !</p>
             <?php } ?>
         </div>
 
