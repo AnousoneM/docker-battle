@@ -9,6 +9,11 @@ require_once 'Orc.php';
 // Nous avons besoin des modèles avant l'utilisation des variables de session : le session start doit être après les "require" des classes
 session_start();
 
+function battle($perso1,$perso2){
+    $perso2->setHealth($perso2->getHealth() - 100);
+    $_SESSION['orc']['carac'] = $perso2;
+}
+
 // on lance notre logique uniquement lorsqu'il y a un POST via un form + button
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -32,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 break;
 
             case 'battle':
-                $battle = true;
+                battle($_SESSION['guerrier']['carac'],$_SESSION['orc']['carac']);
                 break;
 
                 // pas de defaut :)
@@ -165,6 +170,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <?php } ?>
         </div>
 
+    </div>
+
+    <div class="row justify-content-center text-center">
+        <p>Ici le déroulé du combat</p>
     </div>
 
 

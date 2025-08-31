@@ -44,7 +44,7 @@ session_destroy();
 
     <div class="text-center mt-5">
         <p class="h2">Les données de l'ancien combat ont été effacées, vous pouvez lancer un nouveau combat</p>
-        <a href="index.php" class="btn btn-primary">Nouveau combat !!</a>
+        <a href="index.php" class="btn btn-lg btn-primary my-3">Nouveau COMBAT</a>
     </div>
 
 </body>
