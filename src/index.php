@@ -9,49 +9,7 @@ require_once 'Orc.php';
 // Nous avons besoin des modèles avant l'utilisation des variables de session : le session start doit être après les "require" des classes
 session_start();
 
-// FONCTION BATTLE
-function battle($guerrier, $orc)
-{
-    // le combat ne pourra se lancer uniquement si l'un des 2 adversaires est vivant
-    if ($guerrier->getHealth() > 0 && $orc->getHealth() > 0) {
-
-        // on créé une variable qui va contenir nos étapes de combat
-        $battleLog = "";
-
-        // QUAND LE GUERRIER COMMENCE !!!
-        ////////////////////////////////
-
-        // Le guerrier va attaquer
-        // on fait perdre de la vie à l'Orc avec la méthode getDamage()
-        $orc->getDamage($guerrier->attack());
-        // on inscrit le log de notre premiere attaque
-        $battleLog = "Le guerrier attaque de " . $guerrier->attack() . " points. <br>";
-
-        // on regarde si l'orc meurt, s'il est encore envie : il attaque !!!
-        if ($orc->getHealth() > 0) {
-            // on fait une ligne sur notre log de combat
-            $battleLog .= "L'orc reçoit de plein fouet son attaque de " . $guerrier->attack() . ", il lui reste " . $orc->getHealth() . " points de vie. <br>";
-
-            // l'Orc va attaquer
-            // on stock la valeur de l'attaque de l'orc
-            $orcAttack = $orc->attack();
-            // on fait perdre de la vie au Guerrier avec la méthode getDamage()
-            $guerrier->getDamage($orcAttack);
-            // si la vie du guerrier tombe à 0, on le fait mourir
-            $battleLog .= "L'orc effectue une contre-attaque de " . $orcAttack . " points. <br>";
-            $battleLog .= "Le bouclier du guerrier absorbe " . $guerrier->getShieldValue() . " points de dégats. <br>";
-            $battleLog .= "Le guerrier reçoit " . (($orcAttack - $guerrier->getShieldValue()) > 0 ? ($orcAttack - $guerrier->getShieldValue()) : 0) .
-                " dégat(s). <br>";
-            $battleLog .= $guerrier->getHealth() == 0 ? "Le guerrier meurt" : "Le guerrier n'a plus que " . $guerrier->getHealth() . " de vie. ";
-        } else {
-            $battleLog .= "L'orc meurt";
-        }
-        // je créé les logs du combat que je stock dans une variable de session
-        $_SESSION["battle_log"][] = $battleLog;
-    }
-}
-
-
+require_once 'helpers.php';
 
 // on lance notre logique uniquement lorsqu'il y a un POST via un form + button
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -61,20 +19,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // On utilise un switch pour définir des actions en fonction des valeurs
         switch ($_POST['action']) {
+
             case 'create-guerrier':
                 // on créé notre Guerrier qu'on va stocker dans une variable de session
                 $_SESSION['guerrier']['carac'] = new Guerrier(350, 20, "Epee", 50, "Bouclier", 150);
-                $_SESSION['guerrier']['name'] = "Gaston";
+                $_SESSION['guerrier']['name'] = $guerrierNames[rand(0, count($guerrierNames) - 1)];
                 break;
 
             case 'create-orc':
                 // on créé notre Orc qu'on va stocker dans une variable de session
                 $_SESSION['orc']['carac'] = new Orc(666, 0, 100, 300);
-                $_SESSION['orc']['name'] = "Shreky";
+                $_SESSION['orc']['name'] = $orcNames[rand(0, count($orcNames) - 1)];
                 break;
 
             case 'decide':
-
                 // nous bloquons le random quand nous avons trouvé qui commence = pas d'égalité :
                 if (!isset($_SESSION['starter']) || $_SESSION['starter'] == "Egalité, relancer les dés !") {
                     // nous allons déterminer un nombre aléatoire entre 1 et 6, que nous allons attribuer respectivement : Guerrier et Orc
@@ -93,10 +51,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 break;
 
             case 'battle':
+                // nous appelons notre fonction battle() et nous mettons comme paramètres nos objets stockés dans notre $_SESSION
                 battle($_SESSION['guerrier']['carac'], $_SESSION['orc']['carac']);
                 break;
 
-                // pas de defaut :)
+                // pas de defaut :) donc pas de DEFAULT 
 
         }
     }
