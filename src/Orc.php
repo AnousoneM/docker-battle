@@ -35,8 +35,16 @@ class Orc extends Character
         $this->setDamageMax($damageMax);
     }
 
+    // methode permettant de définir l'attaque de l'Orc
     public function attack(): int
     {
         return rand($this->getDamageMin(), $this->getDamageMax());
+    }
+    
+    // pour faciliter, nous allons créer un méthode pour baisser la vie de l'orc
+    // methode permettant à l'orc de recevoir des damages
+    public function getDamage($damage): void
+    {
+        $this->setHealth($this->getHealth() - $damage);
     }
 }

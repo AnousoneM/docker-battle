@@ -9,11 +9,13 @@ class Character
 
     public function getHealth(): int
     {
-        return $this->health;
+        // on effectue une ternaire pour ne pas avoir de point de vie négatifs
+        return $this->health <= 0 ? 0 : $this->health;
     }
 
     public function setHealth(int $health): void
     {
+
         $this->health = $health;
     }
 
