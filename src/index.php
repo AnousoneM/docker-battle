@@ -99,9 +99,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </nav>
 
 
-    <div class="row justify-content-center">
+    <div class="row justify-content-center m-0">
 
-        <div class="col-lg-3 p-3 border">
+        <div class="col-lg-3 p-3">
             <!-- INTERFACE BOUTON -->
             <div class="d-grid gap-1">
                 <form action="" method="POST">
@@ -144,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
 
 
-        <div class="col-lg-3 p-3 border d-flex flex-column justify-content-center">
+        <div class="col-lg-3 p-3 d-flex flex-column justify-content-center">
             <!-- INTERFACE GUERRIER -->
             <?php if (isset($_SESSION['guerrier'])) { ?>
                 <div class="row justify-content-center">
@@ -157,23 +157,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <i class="bi bi-heart-fill text-danger"></i> : <span class="fw-bold text-danger"><?= $_SESSION['guerrier']['carac']->getHealth() <= 0 ? 'MORT' : $_SESSION['guerrier']['carac']->getHealth() ?></span> / <i class="bi bi-droplet-fill text-primary"></i> : <span class="fw-bold text-primary"><?= $_SESSION['guerrier']['carac']->getMana() ?></span>
                         </div>
                         <div class="text-center">
-                            <p class="mt-2 mb-0"><i class="bi bi-pencil-fill fs-4"></i> : <b><?= $_SESSION['guerrier']['carac']->getWeapon() ?></b> (<?= $_SESSION['guerrier']['carac']->getWeaponDamage() ?>)</p>
+                            <p class="mt-2 mb-0"><i class="bi bi-cursor-fill fs-4"></i> : <b><?= $_SESSION['guerrier']['carac']->getWeapon() ?></b> (<?= $_SESSION['guerrier']['carac']->getWeaponDamage() ?>)</p>
                             <p class="my-0"><i class="bi bi-shield-shaded fs-4"></i> : <b><?= $_SESSION['guerrier']['carac']->getShield() ?></b> (<?= $_SESSION['guerrier']['carac']->getShieldValue() ?>)</p>
                         </div>
                     </div>
                 </div>
                 <div class="h4 text-center">Valeur du jet : <?= isset($_SESSION['diceGuerrier']) ? "<i class=\"bi bi-dice-" . $_SESSION['diceGuerrier'] . "-fill h4\"></i>" : "" ?></div>
             <?php } else { ?>
-                <p class="text-center h1">En attente d'un guerrier !</p>
+                <p class="text-center h4">En attente d'un guerrier !</p>
             <?php } ?>
         </div>
 
-        <div class="col-lg-2 p-3 border text-center display-1 d-flex flex-column justify-content-center">
+        <div class="col-lg-2 p-3 text-center display-1 d-flex flex-column justify-content-center">
             <!-- IMAGE COMBAT COMMENCE -->
             <i class="bi bi-lightning-fill text-warning"></i>
         </div>
 
-        <div class="col-lg-3 p-3 border d-flex flex-column justify-content-center">
+        <div class="col-lg-3 p-3 d-flex flex-column justify-content-center">
             <!-- INTERFACE ORC -->
             <?php if (isset($_SESSION['orc'])) { ?>
                 <div class="row justify-content-center">
@@ -187,24 +187,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                         <div class="text-center">
                             <p class="mt-2 mb-0"><i class="bi bi-fire fs-4"></i> : <b>Attaque</b> (<?= $_SESSION['orc']['carac']->getDamageMin() ?> - <?= $_SESSION['orc']['carac']->getDamageMax() ?>)</p>
+                            <p class="my-0 fs-4 text-light"><i class="bi bi-shield-shaded fs-4"></i></p>
                         </div>
                     </div>
                 </div>
                 <div class="h4 text-center">Valeur du jet : <?= isset($_SESSION['diceOrc']) ? "<i class=\"bi bi-dice-" . $_SESSION['diceOrc'] . "-fill h4\"></i>" : "" ?></div>
             <?php } else { ?>
-                <p class="text-center h1">En attente d'un orc !</p>
+                <p class="text-center h4">En attente d'un orc !</p>
             <?php } ?>
         </div>
 
     </div>
 
-    <div class="row justify-content-center">
+    <div class="row flex-column align-items-center justify-content-center m-0">
         <?php
         if (isset($_SESSION['battle_log'])) {
             foreach (array_reverse($_SESSION['battle_log']) as $index => $log) {
-                echo 'ROUND ' . count($_SESSION['battle_log']) - $index . '<br>';
+                echo '<div class="p-2 col-4 border border-dark shadow rounded mt-3">';
+                echo '<span class="fw-bold">ROUND ' . count($_SESSION['battle_log']) - $index . '</span><br>';
                 echo $log;
-                echo '<hr>';
+                echo '</div>';
             }
         }
         ?>
